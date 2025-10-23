@@ -9,7 +9,7 @@ return {
   lazy = false,
   cmd = "Neotree",
   keys = {
-    { "<leader>e", "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
+    { "<leader>e", "<cmd>Neotree toggle reveal<cr>", desc = "NeoTree" },
   },
   opts = {
     window = {
@@ -17,6 +17,7 @@ return {
     },
     filesystem = {
       filtered_items = { hide_dotfiles = false, hide_gitignored = true },
+      follow_current_file = { enabled = true, },
     },
   },
 }

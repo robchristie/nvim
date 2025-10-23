@@ -21,7 +21,7 @@ vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 vim.opt.scrolloff = 10
-vim.opt.winborder = "rounded" -- https://neovim.io/doc/user/options.html#'winborder'
+vim.opt.winborder = "rounded"
 vim.opt.wrap = true
 vim.opt.linebreak = true
 

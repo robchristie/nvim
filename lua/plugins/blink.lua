@@ -22,15 +22,16 @@ return {
                         },
                     },
                 },
-                keymap = {
-                    ["<C-f>"] = {},
-                },
                 cmdline = {
                     enabled = false,
                     completion = { menu = { auto_show = true } },
                     keymap = {
                         ["<CR>"] = { "accept_and_enter", "fallback" },
                     },
+                },
+                keymap = {
+                  preset = "enter",
+                  ["<C-y>"] = { "select_and_accept" },
                 },
                 completion = {
                     menu = {
