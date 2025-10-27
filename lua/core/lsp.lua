@@ -3,6 +3,11 @@ vim.lsp.enable({
     "lua_ls",
     "ruff",
     "ty",
+    "clangd",
+    "bashls",
+    "yamlls",
+    "tombi", --TOML
+    "neocmake",
 })
 
 vim.diagnostic.config({
@@ -126,14 +131,14 @@ vim.keymap.set("n", "<leader>oi", function() ruff_apply_organize_imports(0) end,
   { desc = "Ruff: Organize imports" })
 
 -- Save hook (optional)
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*.py",
-  callback = function(args)
-    ruff_apply_organize_imports(args.buf)
-    vim.lsp.buf.format({
-      async = false,
-      filter = function(c) return c.name == "ruff" end,
-    })
-  end,
-})
+--vim.api.nvim_create_autocmd("BufWritePre", {
+--  pattern = "*.py",
+--  callback = function(args)
+--    ruff_apply_organize_imports(args.buf)
+--    vim.lsp.buf.format({
+--      async = false,
+--      filter = function(c) return c.name == "ruff" end,
+--    })
+--  end,
+--})
 
