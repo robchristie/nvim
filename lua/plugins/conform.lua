@@ -1,18 +1,17 @@
-return {
-    "stevearc/conform.nvim",
-    event = { "BufWritePre" },
-    cmd = { "ConformInfo" },
-    keys = {
-        {
-            -- Customize or remove this keymap to your liking
-            "<leader>fc",
-            function()
-                require("conform").format({ async = true })
-            end,
-            mode = "",
-            desc = "Format buffer",
-        },
-    },
+	return {
+	    "stevearc/conform.nvim",
+	    cmd = { "ConformInfo" },
+	    keys = {
+	        {
+	            -- Customize or remove this keymap to your liking
+	            "<leader>lf",
+	            function()
+	                require("conform").format({ async = true })
+	            end,
+	            mode = "",
+	            desc = "Format buffer",
+	        },
+	    },
     -- This will provide type hinting with LuaLS
     ---@module "conform"
     ---@type conform.setupOpts
@@ -21,6 +20,8 @@ return {
         formatters_by_ft = {
             lua = { "stylua" },
             python = { "isort", "ruff" },
+            json = { "biome" },
+            jsonc = { "biome" },
             -- javascript = { "prettierd", "prettier", stop_after_first = true },
         },
         -- Set default options

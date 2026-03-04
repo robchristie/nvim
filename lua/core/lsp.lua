@@ -1,3 +1,10 @@
+do
+    local ok, blink = pcall(require, "blink.cmp")
+    if ok and blink.get_lsp_capabilities then
+        vim.lsp.config("*", { capabilities = blink.get_lsp_capabilities() })
+    end
+end
+
 vim.lsp.enable({
     "gopls",
     "lua_ls",
@@ -6,8 +13,10 @@ vim.lsp.enable({
     "clangd",
     "bashls",
     "yamlls",
-    "tombi", --TOML
+    "tombi", -- TOML
     "neocmake",
+    "jsonls",
+    "marksman",
 })
 
 vim.diagnostic.config({
@@ -43,6 +52,47 @@ vim.diagnostic.config({
         },
     },
 })
+
+local function diagnostic_virtual_text_opts()
+    return {
+        spacing = 2,
+        prefix = "●",
+        source = "if_many",
+        format = function(d)
+            local msg = (d.message or ""):gsub("%s+", " ")
+            local max = 80
+            return (#msg > max) and (msg:sub(1, max - 1) .. "…") or msg
+        end,
+    }
+end
+
+local function toggle_virtual_lines()
+    local cfg = vim.diagnostic.config()
+    local enabled = cfg.virtual_lines ~= false and cfg.virtual_lines ~= nil
+    if enabled then
+        vim.diagnostic.config({ virtual_lines = false })
+    else
+        vim.diagnostic.config({ virtual_lines = { current_line = true }, virtual_text = false })
+    end
+end
+
+local function toggle_virtual_text()
+    local cfg = vim.diagnostic.config()
+    local enabled = cfg.virtual_text ~= false and cfg.virtual_text ~= nil
+    if enabled then
+        vim.diagnostic.config({ virtual_text = false })
+    else
+        vim.diagnostic.config({ virtual_text = diagnostic_virtual_text_opts(), virtual_lines = false })
+    end
+end
+
+vim.api.nvim_create_user_command("DiagnosticToggleVirtualLines", toggle_virtual_lines,
+    { desc = "Toggle diagnostic virtual_lines" })
+vim.api.nvim_create_user_command("DiagnosticToggleVirtualText", toggle_virtual_text,
+    { desc = "Toggle diagnostic virtual_text" })
+
+vim.keymap.set("n", "<leader>ul", toggle_virtual_lines, { desc = "Toggle diagnostic virtual_lines" })
+vim.keymap.set("n", "<leader>ut", toggle_virtual_text, { desc = "Toggle diagnostic virtual_text" })
 
 -- open the float on demand (will mostly use virtual_lines)
 vim.keymap.set("n", "<leader>df", function()
@@ -141,4 +191,3 @@ vim.keymap.set("n", "<leader>oi", function() ruff_apply_organize_imports(0) end,
 --    })
 --  end,
 --})
-

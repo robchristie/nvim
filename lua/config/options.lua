@@ -28,3 +28,12 @@ vim.opt.linebreak = true
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
+
+-- Treat known comment-tolerant JSON files as JSONC (so LSP/treesitter can handle comments/trailing commas).
+vim.filetype.add({
+    pattern = {
+        [".*/%.vscode/.*%.json"] = "jsonc",
+        ["tsconfig.*%.json"] = "jsonc",
+        ["jsconfig.*%.json"] = "jsonc",
+    },
+})
